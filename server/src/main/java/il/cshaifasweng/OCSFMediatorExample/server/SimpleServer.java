@@ -7,6 +7,9 @@ import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SimpleServer extends AbstractServer {
 	private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
@@ -48,19 +51,43 @@ public class SimpleServer extends AbstractServer {
 				client.sendToClient(message);
 			}
 			else if(request.startsWith("send Submitters IDs")){
-				//add code here to send submitters IDs to client
+				message.setMessage("212349641, 315284349");
+				client.sendToClient(message);
 			}
 			else if (request.startsWith("send Submitters")){
-				//add code here to send submitters names to client
+				message.setMessage("Bshara, Moanes");
+				client.sendToClient(message);
 			}
 			else if (request.equals("what’s the time?")) {
-				//add code here to send the time to client
+				DateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+				message.setMessage(formatter.format(new Date()));
+				client.sendToClient(message);
 			}
 			else if (request.startsWith("multiply")){
+				String[] parts = request.split("\\D+"); // split on non-digit characters
+				int[] numbers = new int[parts.length - 1]; // create an array for the numbers
+
+				for (int i = 1; i < parts.length; i++) { // start at index 1 to skip the first empty string
+					numbers[i-1] = Integer.parseInt(parts[i]); // parse each part as an integer and add it to the array
+				}
+				int val = numbers[0]*numbers[1];
+//				String res = request.replaceAll("[^0-9]", " ");
+//				res = res.replaceAll(" +", " ");
+//				res = res.trim();
+//				String[] nums = res.split(",");
+//				int[] multi = new int[nums.length];
+//				for (int i = 0; i < nums.length; i++) {
+//					multi[i] = Integer.valueOf(nums[i]);
+//				}
+//					int result = multi[0]*multi[1];
+//					message.setMessage(Integer.toString(result));
+				message.setMessage(Integer.toString(val));
+				client.sendToClient(message);
 				//add code here to multiply 2 numbers received in the message and send result back to client
 				//(use substring method as shown above)
 				//message format: "multiply n*m"
 			}else{
+				sendToAllClients(message);
 				//add code here to send received message to all clients.
 				//The string we received in the message is the message we will send back to all clients subscribed.
 				//Example:
