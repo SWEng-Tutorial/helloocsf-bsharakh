@@ -71,16 +71,6 @@ public class SimpleServer extends AbstractServer {
 					numbers[i-1] = Integer.parseInt(parts[i]); // parse each part as an integer and add it to the array
 				}
 				int val = numbers[0]*numbers[1];
-//				String res = request.replaceAll("[^0-9]", " ");
-//				res = res.replaceAll(" +", " ");
-//				res = res.trim();
-//				String[] nums = res.split(",");
-//				int[] multi = new int[nums.length];
-//				for (int i = 0; i < nums.length; i++) {
-//					multi[i] = Integer.valueOf(nums[i]);
-//				}
-//					int result = multi[0]*multi[1];
-//					message.setMessage(Integer.toString(result));
 				message.setMessage(Integer.toString(val));
 				client.sendToClient(message);
 				//add code here to multiply 2 numbers received in the message and send result back to client
